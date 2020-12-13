@@ -1,6 +1,6 @@
-import * as requests from "./esm/requests.js";
-import * as ui from "./esm/ui.js";
-import * as urls from "./esm/urls.js";
+import * as requests from "./requests.js";
+import * as ui from "./ui.js";
+import * as urls from "./urls.js";
 
 let all = {
   requests,
