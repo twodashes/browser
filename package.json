@@ -1,0 +1,35 @@
+{
+  "name": "@twodashes/browser",
+  "version": "0.4.0",
+  "description": "Utility functions for the browser. Querystring parsing, HTTP requests, promises, Retina display, operating system detection, etc.",
+  "private": false,
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "build": "npm run cjs_dir && npm run cjs_index && npm run __dir",
+    "__dir": "rm -rf .parcel-cache && rm -rf __ && parcel build esm/* && mv dist __",
+    "esm_dir": "rollup esm/*.js --format esm --dir esm/ --exports auto",
+    "esm_index": "rollup index.mjs --format esm --file index.mjs --exports auto",
+    "cjs_dir": "rm -rf cjs && rollup esm/*.js --format cjs --dir cjs/ --exports auto",
+    "cjs_index": "rm -rf index.cjs && rollup index.mjs --format cjs --file index.cjs --exports auto"
+  },
+  "targets": {
+    "app": {
+      "engines": {
+        "browsers": "> 0.75%"
+      }
+    }
+  },
+  "module": "index.mjs",
+  "main": "index.cjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/twodashes/browser.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/twodashes/browser/issues"
+  },
+  "homepage": "https://github.com/twodashes/browser#readme"
+}

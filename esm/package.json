@@ -1,0 +1,5 @@
+{
+  "name": "dev-esm",
+  "description": "This folder is the `src` for active development, but it is also ready for export as ESM. This file is not for export, but to tell the IDE and CLI tools to use ESM (type:module) for these files, instead of making giving them all `.mjs` extension.",
+  "type": "module"
+}
