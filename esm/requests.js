@@ -1,5 +1,3 @@
-import http from 'http';
-import './string.js';
 import { querystring_from_object } from './urls.js';
 
 /**
@@ -46,60 +44,16 @@ function load_script(source, beforeEl, scriptAttrs = {}) {
 }
 
 /**
- * Parse simple message string from HTTP JSON response, GraphQL, or Error() object
- *    Too many libraries to fetch HTTP requests, too many non-standard response formats.
- *    This handles Axios or standard XMLHTTPRequest, or an Error() object
- *    Supports either convention, of Twitter or Facebook
- *    Supports "non-legacy" format described in: https://www.mediawiki.org/wiki/API:Errors_and_warnings
- *    Response and parsed error can be any type. This will figure it out, with just a few if/else rules.
- *      NOTE:
- *      Unless you don't care about performance, this should NOT be used to detect if a variable is an error,
- *      only to parse the message string from some object/response which you know contains an error message.
- * @param {object} response - response from HTTP request or Error object
- * @returns {string} - nice readable text, meant for an alert popup in your front-end user interface
- */
-function parse_error_message(response) {
-  if (!response) return "!error";
-  //
-  // maybe input was a string, which is already an error message,
-  // or null/undefined/false, whatever, just output that as is
-  if (typeof response !== "object") return response.toString();
-  //
-  // content from HTTP response:
-  let content = response.response
-    ? response.response.data
-      ? response.response.data
-      : response.response
-    : response.data || response;
-  //
-  // error object:
-  let error = content;
-  if (content.errors) error = content.errors[0] || content.errors;
-  else if (content.warnings) error = content.warnings[0] || content.warnings;
-  else if (content.error) error = content.error;
-  else if (content.warning) error = content.warning;
-  //
-  // something weird:
-  if (typeof error !== "object") return error.toString();
-  //
-  // JS Error object - cut off extra stuff about files/lines:
-  if (error[0] && error[0].length > 3) return error[0];
-  //
-  // JSON object:
-  return error.message || error.toString();
-}
-
-/**
  * GET request
  * @param {string} url - including protocol, not including query params
- * @param {object} data - url query params as a JS object
+ * @param {object|undefined} data - url query params as a JS object
  * @param {object} options - override defaults:
  *    ```
  *    {mode:"cors", cache: "no-cache", redirect: "follow", referrer: "no-referrer", headers: {}}
  *    ```
  * @returns {Promise} - promise will resolve with response data
  */
-function http_get(url = ``, data = {}, options = {}) {
+function http_get(url = ``, data = undefined, options = {}) {
   options = {
     method: "GET",
     mode: "cors",
@@ -110,6 +64,9 @@ function http_get(url = ``, data = {}, options = {}) {
     headers: {},
     ...options
   };
+  if (data && typeof querystring_from_object === "function") {
+    url = url + querystring_from_object(data);
+  }
   return fetch(url + querystring_from_object(data), {
     method: options.method, // *GET, POST, PUT, DELETE, etc.
     mode: options.cors, // no-cors, cors, *same-origin
@@ -199,70 +156,17 @@ function http_ajax(url, method = "GET", data = undefined, headers = {}, options 
       headers,
       ...options
     };
-    // time saving feature = build GET url params from JS object, passed like POST data
-    if (method === "GET" && data && typeof querystring_from_object === "function") {
-      url = url + querystring_from_object(data);
-    }
     return fetch(url, options)
       .then((response) => response.json()) // parses response to JSON
       .then((response) => response.data);
-  }
-  /*
-   * for back-end:
-   */
-  if (typeof http === "object") {
-    return new Promise(function (resolve) {
-      const params = {
-        method,
-        headers
-      };
-      http
-        .request(url, params, (res) => {
-          let data = '';
-          res.on("data", (chunk) => {
-            data += chunk;
-          });
-          res.on("end", () => {
-            // response data
-            // format by type
-            if (
-              data &&
-              typeof data === "string" &&
-              headers["Content-Type"] === "application/json; charset=utf-8"
-            ) {
-              data = JSON.parse(data);
-            }
-            // return
-            resolve(data);
-          });
-          // error?
-        })
-        .on("error", (err) => {
-          console.log("Error: ", err.message);
-        });
-    });
   }
   /*
    * error:
    */
   if (typeof window === "object") {
     throw new Error("Sorry. Your browser does not support this feature.");
-  } else {
-    throw new Error('Error: please import/require "http" Node module before calling http_ajax');
   }
 }
 
-/*
- * EXPORT FOR BROWSER
- */
-if (typeof window === "object") {
-  const browser = { http_ajax, http_get, http_post, http_put, load_script, parse_error_message };
-  // set up for export
-  window.__ = window.__ || {};
-  // flatten
-  for (let func in browser) {
-    window.__[func] = browser[func];
-  }
-}
 /* EXPORT FOR NODE */
-export { http_ajax, http_get, http_post, http_put, load_script, parse_error_message };
+export { http_ajax, http_get, http_post, http_put, load_script };

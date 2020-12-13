@@ -2,8 +2,6 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var string = require('./string.js');
-
 /**
  * Convert JavaScript Object to URL querystring
  * ex: "?one=1&two=something"
@@ -17,7 +15,7 @@ function querystring_from_object(params = {}) {
   if (qs) {
     qs = "?" + qs;
   }
-  return qs
+  return qs;
 }
 
 /**
@@ -31,10 +29,10 @@ function object_from_querystring(str = "") {
   let obj = {};
   let pairs = str.replace("?", "").split("&");
   for (let pair of pairs) {
-    if (!pair) continue
+    if (!pair) continue;
     let tuple = pair.split("=");
     let key = tuple[0];
-    if (!key) continue
+    if (!key) continue;
     obj[key] = tuple[1] || "";
   }
   // decode value
@@ -42,7 +40,7 @@ function object_from_querystring(str = "") {
     obj[key] = decodeURIComponent(obj[key] || "").trim();
   }
   // done
-  return obj
+  return obj;
 }
 
 /**
@@ -54,8 +52,8 @@ function object_from_querystring(str = "") {
  */
 function querystring_replace_key_value(queryString, key, value) {
   // clean input
-  queryString = string.str_trim_char(queryString, "&");
-  queryString = string.str_trim_char(queryString, "?");
+  queryString = str_trim_char(queryString, "&");
+  queryString = str_trim_char(queryString, "?");
   let obj = JSON.parse(
     '{"' + decodeURI(queryString).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}'
   );
@@ -67,7 +65,7 @@ function querystring_replace_key_value(queryString, key, value) {
     output += pair[0] + "=";
     output += pair[1] + "&";
   }
-  return string.str_trim_char(output, "&")
+  return str_trim_char(output, "&");
 }
 
 /*
@@ -81,6 +79,17 @@ if (typeof window === "object") {
   for (let func in browser) {
     window.__[func] = browser[func];
   }
+}
+
+/*
+ * PRIVATE FUNCTIONS BELOW
+ */
+
+// /univeral
+function str_trim_char(s, c) {
+  if (c === "]") c = "\\]";
+  if (c === "\\") c = "\\\\";
+  return s.replace(new RegExp("^[" + c + "]+|[" + c + "]+$", "g"), "");
 }
 
 exports.object_from_querystring = object_from_querystring;

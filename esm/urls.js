@@ -1,5 +1,3 @@
-import { str_trim_char } from "./string.js";
-
 /**
  * Convert JavaScript Object to URL querystring
  * ex: "?one=1&two=something"
@@ -80,3 +78,14 @@ if (typeof window === "object") {
 }
 /* EXPORT FOR NODE */
 export { object_from_querystring, querystring_from_object, querystring_replace_key_value };
+
+/*
+ * PRIVATE FUNCTIONS BELOW
+ */
+
+// /univeral
+function str_trim_char(s, c) {
+  if (c === "]") c = "\\]";
+  if (c === "\\") c = "\\\\";
+  return s.replace(new RegExp("^[" + c + "]+|[" + c + "]+$", "g"), "");
+}
