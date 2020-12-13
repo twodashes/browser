@@ -1,6 +1,12 @@
 # Browser-specific functions - to help with AJAX, URLs, Promises, Retina, OS, etc.
 
-**NOTE:** Please see also: [@twodash/universal](#), which has much more functionality. Any JavaScript functions that can be used in Node as well as the browser are stored in [@twodash/universal](#). This package has only functions that can NOT be used in Node.js, such as is_retina, http_ajax, http_get, querystring_from_object, etc.
+### Please see also: [@twodash/universal](#),
+
+That one has much more functionality. Any JavaScript functions that can be used in Node as well as the browser are stored in [@twodash/universal](#). This package has only functions that can NOT be used in Node.js, such as is_retina, http_ajax, http_get, querystring_from_object, etc.
+
+### PLEASE NOTE:
+
+All names in this library (functions, files) will change. Currently figuring out what to call everything. This library will be stabled when released as **`version 1`**.
 
 
 # Installation
