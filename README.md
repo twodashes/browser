@@ -1,8 +1,8 @@
 # Browser-specific functions - to help with AJAX, URLs, Promises, Retina, OS, etc.
 
-### Please see also: 📙🚀 [@twodash/universal](#) 📙🚀
+### Please see also: 📙🚀 [@twodashes/universal](#) 📙🚀
 
-That one has much more functionality. Any JavaScript functions that can be used in Node as well as the browser are stored in [@twodash/universal](#). This package has only functions that can NOT be used in Node.js, such as is_retina, http_ajax, http_get, querystring_from_object, etc.
+That one has much more functionality. Any JavaScript functions that can be used in Node as well as the browser are stored in [@twodashes/universal](#). This @twodashes/browser package has only functions that can NOT be used in Node.js, such as is_retina, http_ajax, http_get, querystring_from_object, etc.
 
 ### ⚠️ PLEASE NOTE: ⚠️
 
@@ -18,24 +18,24 @@ These are exported for your choice of environment. When importing, specify **cjs
 
 ```JavaScript
   <!-- download all functions into window.__ -->
-  <script src="https://cdn.jsdelivr.net/npm/@twodash/universal@latest/__/index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@twodashes/universal@latest/__/index.js"></script>
   <!-- download only the types of functions you need_ -->
-  <script src="https://cdn.jsdelivr.net/npm/@twodash/universal@latest/__/sort_strings.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@twodashes/universal@latest/__/sort_strings.js"></script>
 ```
 
 ## ES Modules
 ```JavaScript
-  import { sort_by_rating_and_position } from "@twodash/universal/esm/sort_strings"
+  import { sort_by_rating_and_position } from "@twodashes/universal/esm/sort_strings"
 ```
 
 ## CommonJS
 ```JavaScript
-  const sort_strings = require("@twodash/universal/esm/sort_strings")
+  const sort_strings = require("@twodashes/universal/esm/sort_strings")
 ```
 
 # Documentation
 
-### Twodash contents (documentation pages coming soon):
+### Twodashes contents (documentation pages coming soon):
 
 - coming soon - for now please see "./src" folder which uses standard JsDoc comments
 
