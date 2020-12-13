@@ -1,12 +1,15 @@
 # Browser-specific functions - to help with AJAX, URLs, Promises, Retina, OS, etc.
 
-### Please see also: [@twodash/universal](#),
+### Please see also: 📙🚀 [@twodash/universal](#) 📙🚀
 
 That one has much more functionality. Any JavaScript functions that can be used in Node as well as the browser are stored in [@twodash/universal](#). This package has only functions that can NOT be used in Node.js, such as is_retina, http_ajax, http_get, querystring_from_object, etc.
 
-### PLEASE NOTE:
+### ⚠️ PLEASE NOTE: ⚠️
 
 All names in this library (functions, files) will change. Currently figuring out what to call everything. This library will be stabled when released as **`version 1`**.
+
+[![npm package](https://img.shields.io/npm/v/@twodashes/browser.svg)](https://www.npmjs.com/package/@twodashes/browser)
+Try it out in **[CodeSandbox.io](https://codesandbox.io/s/twodashes-universal-demo-2r4os)**
 
 
 # Installation
