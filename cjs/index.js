@@ -164,7 +164,7 @@ function http_get(url = ``, data = undefined, options = {}) {
   if (data && typeof querystring_from_object === "function") {
     url = url + querystring_from_object(data);
   }
-  return fetch(url + querystring_from_object(data), {
+  return fetch(url, {
     method: options.method, // *GET, POST, PUT, DELETE, etc.
     mode: options.cors, // no-cors, cors, *same-origin
     cache: options.cache, // no-cache, reload, force-cache, only-if-cached
@@ -174,7 +174,7 @@ function http_get(url = ``, data = undefined, options = {}) {
     referrer: options.referrer // no-referrer, *client
   })
     .then((response) => response.json()) // parses response to JSON
-    .then((response) => response.data);
+    .then((response) => response.data || response); // parse message
 }
 
 /**
@@ -255,7 +255,7 @@ function http_ajax(url, method = "GET", data = undefined, headers = {}, options 
     };
     return fetch(url, options)
       .then((response) => response.json()) // parses response to JSON
-      .then((response) => response.data);
+      .then((response) => response.data || response);
   }
   /*
    * error:
