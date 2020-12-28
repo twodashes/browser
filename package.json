@@ -1,24 +1,38 @@
 {
   "name": "@twodashes/browser",
-  "version": "0.4.5",
+  "version": "0.4.7",
   "description": "Utility functions for the browser. Querystring parsing, HTTP requests, promises, Retina display, operating system detection, etc.",
   "private": false,
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "node-fetch": "^2.6.1",
+    "@rollup/plugin-node-resolve": "^11.0.1",
+    "rollup": "^2.35.1"
+  },
   "scripts_docs": [
-    ["1. **cut_index** - Copy ./esm/index.js to ./index.mjs (so it does not get converted in next step)"],
-    ["2. **cjs** - Convert ./esm to ./cjs"],
-    ["3. **put_index** - Copy ./index.mjs back to ./esm/index.js"],
-    ["4. **cjs_index** - Convert ./esm/index.js to ./cjs/index.js (so it can get processed without reference to other files)"],
-    ["5. **browser** - Convert ./esm to ./__"]
+    [
+      "1. **cut_index** - Copy ./esm/index.js to ./index.mjs (so it does not get converted in next step)"
+    ],
+    [
+      "2. **cjs** - Convert ./esm to ./cjs"
+    ],
+    [
+      "3. **put_index** - Copy ./index.mjs back to ./esm/index.js"
+    ],
+    [
+      "4. **cjs_index** - Convert ./esm/index.js to ./cjs/index.js (so it can get processed without reference to other files)"
+    ],
+    [
+      "5. **browser** - Convert ./esm to ./__"
+    ]
   ],
   "scripts": {
-    "build": "npm run cut_index && npm run cjs && npm run put_index && npm run cjs_index && npm run browser",
+    "build": "npm run cut_index && npm run cjs & npm run put_index && npm run cjs_index && npm run browser",
     "browser": "rm -rf .parcel-cache && rm -rf __ && parcel build cjs/* && mv dist __",
-    "cjs": "rm -rf cjs && rollup esm/*.js --format cjs --dir cjs/ --exports auto",
+    "cjs": "rm -rf cjs && rollup esm/*.js --format cjs --dir cjs/ --exports auto -p @rollup/plugin-node-resolve",
     "cut_index": "mv esm/index.js index.js",
     "put_index": "mv index.js esm/index.js",
-    "cjs_index": "rollup esm/index.js --format cjs --file cjs/index.js --exports auto"
+    "cjs_index": "rollup esm/index.js --format cjs --file cjs/index.js --exports auto -p @rollup/plugin-node-resolve"
   },
   "targets": {
     "app": {

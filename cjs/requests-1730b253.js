@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * GET request
  * @param {string} url - including protocol, not including query params
@@ -12,7 +14,7 @@
  * @returns {Promise} - promise will resolve with response data
  */
 async function http_get(url = ``, options = {}) {
-  options.method = "GET"
+  options.method = "GET";
   return http_ajax(url, options);
 }
 
@@ -44,22 +46,6 @@ function http_put(url = ``, data = {}) {
  */
 function http_delete(url = ``, data = {}) {
   return http_ajax(url, {method:"DELETE",body:data});
-}
-
-/* EXPORT FOR NODE */
-export { http_get, http_post, http_put, http_delete };
-
-/*
- * PRIVATE LIB
- */
-function querystring_from_object(params = {}) {
-  let qs = Object.keys(params)
-    .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(params[k]))
-    .join("&");
-  if (qs) {
-    qs = "?" + qs;
-  }
-  return qs;
 }
 async function http_ajax(url = ``, options = {}) {
   if (typeof fetch !== "function") {
@@ -115,3 +101,17 @@ async function http_ajax(url = ``, options = {}) {
   // }
   return output;
 }
+
+var requests = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  http_get: http_get,
+  http_post: http_post,
+  http_put: http_put,
+  http_delete: http_delete
+});
+
+exports.http_delete = http_delete;
+exports.http_get = http_get;
+exports.http_post = http_post;
+exports.http_put = http_put;
+exports.requests = requests;
