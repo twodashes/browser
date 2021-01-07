@@ -1,12 +1,12 @@
 # Browser-specific functions - to help with AJAX, URLs, Promises, Retina, OS, etc.
 
-### Please see also: 📙🚀 [@twodashes/universal](#) 📙🚀
+### See also: 📙🚀 [@twodashes/universal](#) 📙🚀
 
-That one has much more functionality. Any JavaScript functions that can be used in Node as well as the browser are stored in [@twodashes/universal](#). This @twodashes/browser package has only functions that can NOT be used in Node.js, such as is_retina, http_ajax, http_get, querystring_from_object, etc.
+That one has much more functionality. Any JavaScript functions that can be used in Node as well as the browser are stored in [@twodashes/universal](#). This @twodashes/browser package has only functions that can NOT be used in Node.js, such as is_retina, http_ajax, http_get, querystring_from_object, etc. These can be used with a `<script>` tag, or `import` by Webpack/Babel.
 
 ### ⚠️ PLEASE NOTE: ⚠️
 
-All names in this library (functions, files) will change. Currently figuring out what to call everything. This library will be stabled when released as **`version 1`**.
+All names in this library (functions, files) will change. Currently figuring out what to call everything. This library will be stabled when released as **`version 1`**. These functions all check for `typeof window === 'object'`, and should quit gracefully if used in server-side rendering, but don't rely on this until version 1. The "http" AJAX functions rely on a global `fetch` variable.
 
 [![npm package](https://img.shields.io/npm/v/@twodashes/browser.svg)](https://www.npmjs.com/package/@twodashes/browser)
 Try it out in **[CodeSandbox.io](https://codesandbox.io/s/twodashes-universal-demo-2r4os)**
