@@ -34,7 +34,7 @@ These are exported for your choice of environment. When importing, specify **cjs
   const sort_strings = require("@twodashes/universal/esm/sort_strings")
 ```
 
-Why not UMD modules standard? **Code splitting**. By specifying your choice "esm" (ES Modules), "cjs" (CommonJS) or "\_\_" (`window.\_\_`), you're able to download only the specific functions you actually need, not everthing else. Additionally on the browser, you can download multiple times using multiple`<script>`tags (for example both`@twodashes/universal`and`@twodashes/browser`, or`/sort_strings`and`/arrays`). All downloaded scripts will be combined into one single flat`window.\_\_` dictionary/object. See [code sandbox](https://codesandbox.io/s/twodashes-universal-demo-2r4os). Please do message ([Paul](https://paulshorey.com)) if this is unclear, or if may know a better way of accomplishing all this.
+Why not UMD modules standard? **Code splitting**. By specifying your choice "esm" (ES Modules), "cjs" (CommonJS) or "\_\_" (`window.__`), you're able to download only the specific functions you actually need, not everthing else. Additionally on the browser, you can download multiple times using multiple`<script>`tags (for example both`@twodashes/universal`and`@twodashes/browser`, or`/sort_strings`and`/arrays`). All downloaded scripts will be combined into one single flat`window.__` dictionary/object. See [code sandbox](https://codesandbox.io/s/twodashes-universal-demo-2r4os). Please do message ([Paul](https://paulshorey.com)) if this is unclear, or if may know a better way of accomplishing all this.
 
 # Documentation
 
