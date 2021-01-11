@@ -1,4 +1,47 @@
 /**
+ * Load external script into html page
+ * @param {string} source - external URL to load
+ * @param {object} beforeEl - DOM element before which to insert the new <script> tag
+ * @param {object} scriptAttrs - object of attributes to add to the new <script> tag
+ */
+function load_script(source, beforeEl, scriptAttrs = {}) {
+  if (!source) return false;
+  if (typeof window !== "object" || typeof document !== "object") return false;
+  return new Promise((resolve, reject) => {
+    let script = document.createElement("script");
+
+    // force certain attributes
+    script.async = true;
+    script.defer = true;
+    for (let key in scriptAttrs) {
+      script[key] = scriptAttrs[key];
+    }
+
+    // NOTE: needs refactor: maybe .bind(script)
+    function onloadHander(_, isAbort) {
+      if (isAbort || !script.readyState || /loaded|complete/.test(script.readyState)) {
+        script.onload = null;
+        script.onreadystatechange = null;
+        script = undefined;
+
+        if (isAbort) {
+          reject();
+        } else {
+          resolve();
+        }
+      }
+    }
+
+    script.onload = onloadHander;
+    script.onreadystatechange = onloadHander;
+
+    script.src = source;
+    window.document.body.append(script);
+    resolve(true);
+  });
+}
+
+/**
  * GET request
  * @param {string} url - including protocol, not including query params
  * @param {object} options - override defaults:
@@ -46,8 +89,25 @@ function http_delete(url = ``, data = {}) {
   return http_ajax(url, {method:"DELETE",body:data});
 }
 
+
+
+/*
+ * EXPORT FOR BROWSER
+ */
+if (typeof window === "object") {
+  const browser = { http_get, http_post, http_put, http_delete, load_script };
+  // set up for export
+  window.__ = window.__ || {};
+  // flatten
+  for (let func in browser) {
+    window.__[func] = browser[func];
+  }
+}
 /* EXPORT FOR NODE */
-export { http_get, http_post, http_put, http_delete };
+export { http_get, http_post, http_put, http_delete, load_script };
+
+
+
 
 /*
  * PRIVATE LIB

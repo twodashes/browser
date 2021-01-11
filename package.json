@@ -1,6 +1,6 @@
 {
   "name": "@twodashes/browser",
-  "version": "0.4.11",
+  "version": "0.4.12",
   "description": "Utility functions for the browser. Querystring parsing, HTTP requests, promises, Retina display, operating system detection, etc.",
   "private": false,
   "dependencies": {},
